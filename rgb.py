@@ -5,8 +5,8 @@ import numpy as np
 facesDoCubo = {
   0: {"RGB": ([0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]), "axis": 0}, 
   1: {"RGB": ([255, 0, 0], [255, 255, 0], [255, 0, 255], [255, 255, 255]), "axis": 0},
-  2: {"RGB": ([0, 0, 0], [255, 0, 0], [0, 0, 255], [255, 0, 255]), "axis": 1},
-  3: {"RGB": ([0, 255, 0], [0, 0, 0], [0, 0, 255], [0, 255, 255]), "axis": 0},
+  2: {"RGB": ([0, 255, 0], [0, 0, 0], [0, 0, 255], [0, 255, 255]), "axis": 0},
+  3: {"RGB": ([0, 0, 0], [255, 0, 0], [0, 0, 255], [255, 0, 255]), "axis": 1},
   4: {"RGB": ([255, 255, 0], [0, 255, 0], [255, 255, 255], [0, 255, 255]), "axis": 1},
   5: {"RGB": ([255, 0, 255], [255, 255, 255], [0, 0, 255], [0, 255, 255]), "axis": 2},
   6: {"RGB": ([0, 0, 0], [0, 255, 0], [255, 0, 0], [255, 255, 0]), "axis": 2}
@@ -14,11 +14,14 @@ facesDoCubo = {
 
 def mudarPagina(linha, face,page):
     for x in linha:
-        page -= 1
+        if face == 0:
+            x[facesDoCubo[face]["axis"]] = 255 - 253
+            break
+        page1 = page - 1
         if x[facesDoCubo[face]["axis"]] == 255:
-            x[facesDoCubo[face]["axis"]] = 255 - page
+            x[facesDoCubo[face]["axis"]] = 255 - page1
         else:
-            x[facesDoCubo[face]["axis"]] = page
+            x[facesDoCubo[face]["axis"]] = page1
 
 
 
@@ -32,7 +35,7 @@ def main():
     cv2.namedWindow(windowName, cv2.WINDOW_NORMAL)
     
     cv2.createTrackbar('FACE', windowName, 1, 6, emptyFunction)
-    cv2.createTrackbar('PAGE', windowName, 0, 255, emptyFunction)
+    cv2.createTrackbar('PAGE', windowName, 1, 255, emptyFunction)
 
     while(True):
         cv2.imshow(windowName, img1.astype(np.uint8))
@@ -50,6 +53,7 @@ def main():
      
         tracoInferior = np.linspace(linha1[0], linha1[1], 255)
         tracoSuperior = np.linspace(linha2[0], linha2[1], 255)
+    
         img1 = np.linspace(tracoSuperior, tracoInferior, 255) 
         
 
