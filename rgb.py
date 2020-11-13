@@ -10,7 +10,7 @@ facesDoCubo = [([255, 0, 0], [255, 255, 0], [255, 0, 255], [255, 255, 255]),
 
 axis = [0, 0, 1, 1, 2, 2]
 
-def mudarPagina(linha, face,page):
+def mudarPagina(linha, face, page):
     for x in linha:
         if x[axis[face]] == 255:
             x[axis[face]] = 255 - page
@@ -39,14 +39,13 @@ def main():
         face1 = cv2.getTrackbarPos('FACE', windowName)
         page = cv2.getTrackbarPos('PAGE', windowName)
              
-        linha1 = [facesDoCubo[face1][0].copy(), facesDoCubo[face1][1].copy()] 
-        linha2 = [facesDoCubo[face1][2].copy(), facesDoCubo[face1][3].copy()]
+        face = [facesDoCubo[face1][0].copy(), facesDoCubo[face1][1].copy(), facesDoCubo[face1][2].copy(), facesDoCubo[face1][3].copy()] 
 
-        mudarPagina(linha1, face1, page)
-        mudarPagina(linha2, face1, page)
+        mudarPagina(face[:2], face1, page)
+        mudarPagina(face[2:], face1, page)
      
-        tracoInferior = np.linspace(linha1[0], linha1[1], 255)
-        tracoSuperior = np.linspace(linha2[0], linha2[1], 255)
+        tracoInferior = np.linspace(face[:2][0], face[:2][1], 255)
+        tracoSuperior = np.linspace(face[2:][0], face[2:][1], 255)
     
         img1 = np.linspace(tracoInferior, tracoSuperior, 255).astype(np.uint8)
         
