@@ -36,13 +36,13 @@ def main():
         
         if cv2.waitKey(1) == 27:
             break
-        face1 = cv2.getTrackbarPos('FACE', windowName)
+        faceAtual = cv2.getTrackbarPos('FACE', windowName)
         page = cv2.getTrackbarPos('PAGE', windowName)
              
-        face = [facesDoCubo[face1][0].copy(), facesDoCubo[face1][1].copy(), facesDoCubo[face1][2].copy(), facesDoCubo[face1][3].copy()] 
+        face = [facesDoCubo[faceAtual][0].copy(), facesDoCubo[faceAtual][1].copy(), facesDoCubo[faceAtual][2].copy(), facesDoCubo[faceAtual][3].copy()] 
 
-        mudarPagina(face[:2], face1, page)
-        mudarPagina(face[2:], face1, page)
+        mudarPagina(face[:2], faceAtual, page)
+        mudarPagina(face[2:], faceAtual, page)
      
         tracoInferior = np.linspace(face[:2][0], face[:2][1], 255)
         tracoSuperior = np.linspace(face[2:][0], face[2:][1], 255)
